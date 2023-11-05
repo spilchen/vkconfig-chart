@@ -1,0 +1,19 @@
+██╗░░░██╗██╗░░██╗░█████╗░░█████╗░███╗░░██╗███████╗██╗░██████╗░
+██║░░░██║██║░██╔╝██╔══██╗██╔══██╗████╗░██║██╔════╝██║██╔════╝░
+╚██╗░██╔╝█████═╝░██║░░╚═╝██║░░██║██╔██╗██║█████╗░░██║██║░░██╗░
+░╚████╔╝░██╔═██╗░██║░░██╗██║░░██║██║╚████║██╔══╝░░██║██║░░╚██╗
+░░╚██╔╝░░██║░╚██╗╚█████╔╝╚█████╔╝██║░╚███║██║░░░░░██║╚██████╔╝
+░░░╚═╝░░░╚═╝░░╚═╝░╚════╝░░╚════╝░╚═╝░░╚══╝╚═╝░░░░░╚═╝░╚═════╝░
+
+{{ if .Values.initializer.enabled -}}
+The initializer pod is running. You can exec into it and run your vkconfig
+commands with this command:
+
+kubectl exec -n {{ .Release.Namespace }} -it {{ include "vertica-kafka-scheduler.initializer-fullname" . }} -- bash
+
+{{ end -}}
+{{ if .Values.launcher.enabled -}}
+The launcher deployment object was created. You can monitor the output with this command:
+
+kubectl logs -n {{ .Release.Namespace }} deployment/{{ include "vertica-kafka-scheduler.fullname" . }}
+{{ end }}

@@ -1,0 +1,7 @@
+apiVersion: v2
+name: vertica-kafka-scheduler
+description: Deploys Vertica's Kafka Scheduler (vkconfig) for Kubernetes
+type: application
+version: 0.1.0
+# The appVersion corresponds to the Vertica version
+appVersion: "12.0.3"

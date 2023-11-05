@@ -1,0 +1,112 @@
+# Default values for vertica-kafka-scheduler.
+# This is a YAML-formatted file.
+
+image:
+  repository: vertica/kafka-scheduler
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  # If using the official vertica repository, this tag corresponds to the
+  # vertica version that vkconfig was complied against. Pick the same version
+  # that matches the Vertica server you have deployed.
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+# The launcher is a deployment object that runs the 'vkconfig launch' program.
+# You must already have done setup of vkconfig for this program to work. You
+# can temporarily disable it to allow for setup to occur.
+launcher:
+  # Set this to false if you don't want to deploy the vkconfig launch
+  # deployment just yet, perhaps to complete setup.
+  enabled: true
+  # The size of the launcher deployment.
+  replicaCount: 1
+
+# The initializer is pod that runs the container without invoking vkconfig. It
+# does a 'sleep infinity' so that you can exec into it and run any vkconfig
+# commands needed to complete setup.
+initializer:
+  # Set this to false if you no longer need to deploy the initializer anymore.
+  enabled: true
+
+# The vkconfig.conf is a file that is mounted in the pods for command line
+# options passed to vkconfig.
+conf:
+  # Set this to false if you already have a vkconfig.conf in a ConfigMap and
+  # don't need helm to generate one.
+  generate: true
+  # The name of the ConfigMap that contains the contents of vkconfig.conf.
+  # If generate=false, this must already exist before deployment. If this is
+  # omitted a suitable name for the ConfigMap is chosen based on the
+  # release/chart name.
+  configMapName: ""
+  # content is a set of key/value pairs that make up the vkconfig.conf. There
+  # is no prescribed set of keys that need to be here. See this to find options
+  # to set:
+  # https://docs.vertica.com/latest/en/kafka-integration/vkconfig-script-options/common-vkconfig-script-options/
+  content:
+    username: "dbadmin"
+    # password: ""
+    # dbhost: ""
+    dbport: "5433"
+    # config-schema: ""
+    # If enabled, fill in the conf.tls section too.
+    enable-ssl: "false"
+
+# If vkconfig needs to have TLS setup in order to communicate fill in the
+# following block.
+tls:
+  # Set this to true to mount the secrets and have the JVM options set
+  # for the trust/key store in the pods.
+  enabled: false
+  # Name of a preexisting Secret that contains the truststore to use.
+  trustStoreSecretName: ""
+  # The next two control the name of the trust store. The path will be:
+  # <trustStoreMountPath>/<trustStoreSecretKey>
+  #
+  # The directory mount for the trustStoreSecretName.
+  trustStoreMountPath: ""
+  # The key within trustStoreSecretName that has the truststore to use. This
+  # will be mounted as a file within the pod.
+  trustStoreSecretKey: ""
+  # Name of a preexisting Secret that contains the keystore to use.
+  keyStoreSecretName: ""
+  # The next two control the name of the key store. The path will be:
+  # <keyStoreMountPath>/<keyStoreSecretKey>
+  #
+  # The directory mount for the keyStoreSecretName.
+  keyStoreMountPath: ""
+  # The key within keyStoreSecretName that has the keystore to use. This
+  # will be mounted as a file within the pod.
+  keyStoreSecretKey: ""
+  # The password to access the keystore
+  keyStorePassword: ""
+
+# Controls the setting of VKCONFIG_JVM_OPTS in the pods. Values for truststore
+# and keystore are added automatically based on the tls.* values.
+jvmOpts: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
