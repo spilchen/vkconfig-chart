@@ -8,7 +8,7 @@ This helm chart will deploy the vertica kafka scheduler. It will deploy the vert
 | conf.generate | If true, the helm chart will control creation of the vkconfig.conf ConfigMap. | true |
 | fullNameOverride | Gives full controls over the name of the objects that get created. This takes precedence over nameOverride. | |
 | initializer.enabled | If true, the initializer pod is created. This can be used to run any setup tasks needed. | true |
-| image.pullPolicy | What pull policy to use for image | IfNotPresent |
+| image.pullPolicy | The pull policy to use for the image | IfNotPresent |
 | image.repository | The image repository and name that contains the Vertica Kafka Scheduler | vertica/kafka-scheduler |
 | image.tag | The tag corresponds to the version to use. The version of the Vertica Kafka Scheduler must match version of the Vertica server you are connecting to | Defaults to the charts appVersion |
 | imagePullSecrets | A list of Secret's that are needed to be able to pull the image | |

@@ -24,7 +24,7 @@ launcher:
   # The size of the launcher deployment.
   replicaCount: 1
 
-# The initializer is pod that runs the container without invoking vkconfig. It
+# The initializer is a pod that runs the container without invoking vkconfig. It
 # does a 'sleep infinity' so that you can exec into it and run any vkconfig
 # commands needed to complete setup.
 initializer:
@@ -47,11 +47,11 @@ conf:
   # to set:
   # https://docs.vertica.com/latest/en/kafka-integration/vkconfig-script-options/common-vkconfig-script-options/
   content:
+    config-schema: "Scheduler"
     username: "dbadmin"
     # password: ""
     # dbhost: ""
     dbport: "5433"
-    # config-schema: ""
     # If enabled, fill in the conf.tls section too.
     enable-ssl: "false"
 
