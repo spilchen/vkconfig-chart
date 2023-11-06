@@ -5,4 +5,4 @@ type: application
 version: 0.1.0
 # The appVersion corresponds to the Vertica version
 appVersion: "12.0.3"
-icon: https://github.com/vertica/vertica-kubernetes/blob/main/vertica-logo.png
+icon: https://github.com/spilchen/vkconfig-chart/blob/main/vertica-logo.png
